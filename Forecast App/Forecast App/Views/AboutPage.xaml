@@ -5,37 +5,39 @@
              xmlns:vm="clr-namespace:Forecast_App.ViewModels"
              Title="{Binding Title}">
 
+    <RefreshView Refreshing="RefreshView_Refreshing" x:Name="CastRefreshView">
         <ScrollView>
-            <StackLayout>
-                <Grid RowSpacing="25" RowDefinitions="Auto, Auto, Auto, Auto">
-                    <Image Source="background_black.jpg" Aspect="AspectFit" />
+        <StackLayout>
+        <Grid RowSpacing="25" RowDefinitions="Auto, Auto, Auto, Auto">
+            <Image Source="background_black.jpg" Aspect="AspectFit" />
                     <StackLayout Padding="20">
                         <Label Text="Country"
                        FontSize="25" 
                    TextColor="White"
                        x:Name="CountryName"
                    TextTransform="Uppercase"/>
-                        <Label Text="City"
+                <Label Text="City"
                        FontSize="50" 
                    TextColor="White"
                        x:Name="CityName"
                    />
-                        <Label Text="Celsius"
+                <Label Text="Celsius"
                        FontSize="20" 
                    TextColor="White"
                    />
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="3"
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Text="3"
                        FontSize="100" 
                    TextColor="White"
                    HorizontalOptions="StartAndExpand"
                            x:Name="Degree"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Button Text="Current Loc" x:Name="ButtonGetCurrentLoc" Clicked="ButtonGetCurrentLoc_Clicked" />
-                        </StackLayout>
-                    </StackLayout>
-                </Grid>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="Current Loc" x:Name="ButtonGetCurrentLoc" Clicked="ButtonGetCurrentLoc_Clicked" />
+                </StackLayout>
             </StackLayout>
+        </Grid>
+    </StackLayout>
         </ScrollView>
+        </RefreshView>
 </ContentPage>

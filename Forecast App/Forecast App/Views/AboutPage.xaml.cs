@@ -14,6 +14,8 @@ namespace Forecast_App.Views
 {
     public partial class AboutPage : ContentPage
     {
+        bool isUpdated = true;
+
         public AboutPage()
         {
             InitializeComponent();
@@ -21,7 +23,13 @@ namespace Forecast_App.Views
             GetCurrentWeather();
         }
 
-        private async void GetCurrentWeather()
+       /* private async Task CheckIfUpdated()
+        {
+            await Task.Delay(10000);
+            isUpdated = false;
+        } */
+
+        private async Task GetCurrentWeather()
         {
             try
             {
@@ -42,7 +50,7 @@ namespace Forecast_App.Views
                 }
                 using (var client = new HttpClient())
                 {
-                    var uri = $"https://api.openweathermap.org/data/3.0/onecall?lat={testLat}&lon={testLong}&units=metric&&appid=2663f93269f131c6561ef4c3529ffc14";
+                    var uri = $"https://api.openweathermap.org/data/3.0/onecall?lat={testLat}&lon={testLong}&units=metric&&appid=debug";
                     var result = await client.GetStringAsync(uri);
 
                     var currentWeather = JsonConvert.DeserializeObject<Weather>(result);
@@ -84,7 +92,7 @@ namespace Forecast_App.Views
                     }
                 using (var client = new HttpClient())
                 {
-                    var uri = $"https://api.openweathermap.org/data/3.0/onecall?lat={location.Latitude}&lon={location.Longitude}&units=metric&&appid=2663f93269f131c6561ef4c3529ffc14";
+                    var uri = $"https://api.openweathermap.org/data/3.0/onecall?lat={location.Latitude}&lon={location.Longitude}&units=metric&&appid=debug";
                     var result = await client.GetStringAsync(uri);
 
                     var currentWeather = JsonConvert.DeserializeObject<Weather>(result);
@@ -106,6 +114,16 @@ namespace Forecast_App.Views
             {
                 await DisplayAlert("Faild Other", ex.Message, "OK");
             }
+        }
+        async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+           /* if (!isUpdated)
+            {
+              await GetCurrentWeather();
+              CastRefreshView.IsRefreshing = false;
+              await CheckIfUpdated();
+                isUpdated = true;
+            } */
         }
     }
 }

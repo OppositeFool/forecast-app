@@ -29,7 +29,7 @@ namespace Forecast_App.ViewModels
         {
             using (var client = new HttpClient())
             {
-                var uri = "https://api.openweathermap.org/data/3.0/onecall?lat=47.6&lon=17.6&appid=2663f93269f131c6561ef4c3529ffc14";
+                var uri = "https://api.openweathermap.org/data/3.0/onecall?lat=47.6&lon=17.6&appid=debug";
                 var result = await client.GetStringAsync(uri);
 
                 var currentWeather = JsonConvert.DeserializeObject<Weather>(result);
