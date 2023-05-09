@@ -20,7 +20,7 @@ namespace Forecast_App.ViewModels
     {
         public AboutViewModel()
         {
-           // GetCurrentWeather();
+            //GetCurrentWeather();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -29,19 +29,19 @@ namespace Forecast_App.ViewModels
         {
             using (var client = new HttpClient())
             {
-                var uri = "https://api.openweathermap.org/data/3.0/onecall?lat=47.6&lon=17.6&appid=debug";
+                var uri = $"https://api.openweathermap.org/data/3.0/onecall?lat=47.6&lon=17.6&appid={SecretKeys.API_KEY}";
                 var result = await client.GetStringAsync(uri);
 
                 var currentWeather = JsonConvert.DeserializeObject<Weather>(result);
 
-                Weather = 20.6;
+                Degree = 20.6;
             }
         }
-        double _weather;
-        public double Weather
+        double _degree;
+        public double Degree
         {
-            get { return _weather; }
-            set { _weather = value; OnPropertyChanged(); }
+            get { return _degree; }
+            set { _degree = value; OnPropertyChanged(nameof(Degree)); }
         }
         protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {

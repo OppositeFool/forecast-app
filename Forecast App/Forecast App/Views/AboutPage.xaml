@@ -25,8 +25,18 @@
                        FontSize="20" 
                    TextColor="White"
                    />
+                        <Label Text="Felhős"
+                               x:Name="main"
+                       FontSize="20" 
+                   TextColor="White"
+                   />
+                        <Label Text="hosszú"
+                               x:Name="description"
+                       FontSize="17" 
+                   TextColor="White"
+                   />
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Text="3"
+                    <Label Text="3°"
                        FontSize="100" 
                    TextColor="White"
                    HorizontalOptions="StartAndExpand"

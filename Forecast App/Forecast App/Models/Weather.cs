@@ -15,5 +15,11 @@ namespace Forecast_App.Models
     public class current
     {
         public double temp { get; set; }
+        public weather[] weather { get; set; }
+    }
+    public class weather
+    {
+        public string main { get; set; }
+        public string description { get; set; }
     }
 }
