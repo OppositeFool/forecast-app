@@ -1,53 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="Forecast_App.Views.AboutPage"
              xmlns:vm="clr-namespace:Forecast_App.ViewModels"
              Title="{Binding Title}">
 
     <RefreshView Refreshing="RefreshView_Refreshing" x:Name="CastRefreshView">
-        <ScrollView>
-        <StackLayout>
-        <Grid RowSpacing="25" RowDefinitions="Auto, Auto, Auto, Auto">
-            <Image Source="background_black.jpg" Aspect="AspectFit" />
-                    <StackLayout Padding="20">
-                        <Label Text="Country"
-                       FontSize="25" 
-                   TextColor="White"
-                       x:Name="CountryName"
-                   TextTransform="Uppercase"/>
+        <ScrollView BackgroundColor="white">
+            <StackLayout 
+                Padding="20">
+                <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+                       
+       HorizontalOptions="FillAndExpand"
+       VerticalOptions="Center"
+                       xct:ShadowEffect.Color="Black"
+                       >
+                    <StackLayout>
+                        
+                    <Label 
+                        Text="Country"
+                           FontSize="25" 
+                       TextColor="Black"
+                           x:Name="CountryName"
+                       TextTransform="Uppercase"
+                        FontFamily="MarkerFelt"
+                        />
                 <Label Text="City"
                        FontSize="50" 
-                   TextColor="White"
+                   TextColor="Black"
                        x:Name="CityName"
+                       FontFamily="MarkerFelt"
                    />
-                <Label Text="Celsius"
-                       FontSize="20" 
-                   TextColor="White"
-                   />
+                    </StackLayout>
+                </Frame>
+                
+                <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+       HorizontalOptions="FillAndExpand"
+                       xct:ShadowEffect.Color="Black"
+                       >
+
+                    <Grid RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="weatherIcon" Source="" Grid.Column="1" Grid.Row="0"  HeightRequest="100"></Image>
                         <Label Text="Felhős"
                                x:Name="main"
                        FontSize="20" 
-                   TextColor="White"
+                   TextColor="Black"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       HorizontalTextAlignment="Center"
                    />
                         <Label Text="hosszú"
                                x:Name="description"
                        FontSize="17" 
-                   TextColor="White"
-                   />
-                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Text="3°"
-                       FontSize="100" 
-                   TextColor="White"
+                   TextColor="Black"
+                   Grid.Column="1"
+                       Grid.Row="2"
+                       HorizontalTextAlignment="Center"/>
+                        <Label Text="3°"
+                       FontSize="90" 
+                   TextColor="Black"
                    HorizontalOptions="StartAndExpand"
-                           x:Name="Degree"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Button Text="Current Loc" x:Name="ButtonGetCurrentLoc" Clicked="ButtonGetCurrentLoc_Clicked" />
-                </StackLayout>
+                               VerticalOptions="Center"
+                           x:Name="Degree"
+                           Grid.Column="0"
+                               Grid.Row="0"
+                               Grid.RowSpan="2"
+                           />
+                        <Label Text="Celsius"
+                       FontSize="20" 
+                   TextColor="Black"
+                               Grid.Column="0"
+                               Grid.Row="2"
+                   />
+                    </Grid>
+                </Frame>
+                <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+       HorizontalOptions="FillAndExpand"
+                       xct:ShadowEffect.Color="Black"
+                       >
+                    <ScrollView Orientation="Horizontal">
+                        <FlexLayout Direction="Row" Wrap="NoWrap" JustifyContent="Start" x:Name="hourlyContainer">
+                           
+                        </FlexLayout>
+                    </ScrollView>
+                </Frame>
             </StackLayout>
-        </Grid>
-    </StackLayout>
         </ScrollView>
         </RefreshView>
 </ContentPage>

@@ -14,13 +14,10 @@ namespace Forecast_App.Views
 {
     public partial class AboutPage : ContentPage
     {
-        bool isUpdated = true;
-
         public AboutPage()
         {
             InitializeComponent();
-            var t = Task.Run(() => GetCurrentWeather(true));
-            t.Wait();
+            GetCurrentWeather(true);
         }
 
        /* private async Task CheckIfUpdated()
@@ -66,7 +63,7 @@ namespace Forecast_App.Views
                         CountryName.Text = placemark.CountryName;
                     }
                 }
-                
+
                 using (var client = new HttpClient())
                 {
                     var uri = $"https://api.openweathermap.org/data/3.0/onecall?lat={realLat}&lon={realLong}&units=metric&lang=hu&appid={SecretKeys.API_KEY}";
@@ -74,14 +71,51 @@ namespace Forecast_App.Views
 
                     var currentWeather = JsonConvert.DeserializeObject<Weather>(result);
 
+                    var hourlyCast = currentWeather.hourly;
 
                     Degree.Text = $"{Math.Round(currentWeather.current.temp)}°";
                     main.Text = currentWeather.current.weather[0].main;
                     description.Text = currentWeather.current.weather[0].description;
-
-                    if(CastRefreshView.IsRefreshing)
+                    string iconId = currentWeather.current.weather[0].icon;
+                    var imageSource = new UriImageSource { Uri = new Uri($"https://openweathermap.org/img/wn/{iconId}@4x.png") };
+                    imageSource.CachingEnabled = false;
+                    imageSource.CacheValidity = TimeSpan.FromHours(1);
+                    weatherIcon.Source = imageSource;
+                    hourlyContainer.Children.Clear();
+                    int hourlyCastCount = hourlyCast.Length;
+                    int i = 0;
+                    if (hourlyContainer.Children.Count == 0)
                     {
-                        CastRefreshView.IsRefreshing = false;
+                        while (i < hourlyCastCount)
+                        {
+                            string elementIconId = currentWeather.hourly[i].weather[0].icon;
+                            var elementImageSource = new UriImageSource { Uri = new Uri($"https://openweathermap.org/img/wn/{elementIconId}@4x.png") };
+                            StackLayout stack = new StackLayout
+                            {
+                                Padding = 10,
+                                Children =
+                                {
+                                    new Image
+                                    {
+                                        Source = elementImageSource,
+                                    },
+                                    new Label
+                                    {
+                                        ClassId = "temp",
+                                        Text = $"{Math.Round(hourlyCast[i].temp)}°",
+                                        HorizontalTextAlignment = TextAlignment.Center,
+                                    },
+                                    new Label
+                                    {
+                                        ClassId = "desc",
+                                         Text = hourlyCast[i].weather[0].description,
+                                           HorizontalTextAlignment = TextAlignment.Center,
+                                    }
+                                }
+                            };
+                            hourlyContainer.Children.Add(stack);
+                            i++;
+                        }
                     }
                 }
 
@@ -98,12 +132,12 @@ namespace Forecast_App.Views
             {
                 await DisplayAlert("Faild Other", ex.Message, "OK");
             }
+            if (CastRefreshView.IsRefreshing)
+            {
+                CastRefreshView.IsRefreshing = false;
+            }
         }
 
-        private async void ButtonGetCurrentLoc_Clicked(object sender, EventArgs e)
-        {
-            await GetCurrentWeather(false);
-        }
         async void RefreshView_Refreshing(object sender, EventArgs e)
         {
             await GetCurrentWeather(false);

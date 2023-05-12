@@ -10,9 +10,16 @@ namespace Forecast_App.Models
         public double lat { get; set; }
 
         public current current { get; set; }
+
+        public hourly[] hourly { get; set; }
     }
 
     public class current
+    {
+        public double temp { get; set; }
+        public weather[] weather { get; set; }
+    }
+    public class hourly
     {
         public double temp { get; set; }
         public weather[] weather { get; set; }
@@ -21,5 +28,6 @@ namespace Forecast_App.Models
     {
         public string main { get; set; }
         public string description { get; set; }
+        public string icon { get; set; }
     }
 }
