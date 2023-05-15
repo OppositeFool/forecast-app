@@ -5,16 +5,18 @@
              x:Class="Forecast_App.Views.AboutPage"
              xmlns:vm="clr-namespace:Forecast_App.ViewModels"
              Title="{Binding Title}">
-
-    <RefreshView Refreshing="RefreshView_Refreshing" x:Name="CastRefreshView">
+    <RefreshView Refreshing="RefreshView_Refreshing" x:Name="CastRefreshView" IsRefreshing="{Binding RefreshIsBusy}">
         <ScrollView BackgroundColor="white">
             <StackLayout 
                 Padding="20">
+                <ActivityIndicator Color="Blue" IsRunning="{Binding ActivityIsBusy}" x:Name="updateIndicator" IsVisible="{Binding ActivityIsBusy}"/>
+                <Entry x:Name="entry" Placeholder="Győr"  ClearButtonVisibility="WhileEditing" Completed="Entry_Completed"/>
                 <Frame HasShadow="True" 
                        CornerRadius="10" 
        BackgroundColor="White"
        Padding="20"
-                       
+       x:Name="Section1"
+                       IsVisible="false"
        HorizontalOptions="FillAndExpand"
        VerticalOptions="Center"
                        xct:ShadowEffect.Color="Black"
@@ -22,14 +24,14 @@
                     <StackLayout>
                         
                     <Label 
-                        Text="Country"
+                        Text="{Binding CountryName}"
                            FontSize="25" 
                        TextColor="Black"
-                           x:Name="CountryName"
+                         
                        TextTransform="Uppercase"
                         FontFamily="MarkerFelt"
                         />
-                <Label Text="City"
+                <Label Text="{Binding CityName}"
                        FontSize="50" 
                    TextColor="Black"
                        x:Name="CityName"
@@ -42,6 +44,8 @@
                        CornerRadius="10" 
        BackgroundColor="White"
        Padding="20"
+                       x:Name="Section2"
+                       IsVisible="false"
        HorizontalOptions="FillAndExpand"
                        xct:ShadowEffect.Color="Black"
                        >
@@ -50,14 +54,14 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="30" />
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image x:Name="weatherIcon" Source="" Grid.Column="1" Grid.Row="0"  HeightRequest="100"></Image>
-                        <Label Text="Felhős"
+                        <Image x:Name="weatherIcon" Source="{Binding ImgSource}" Grid.Column="1" Grid.Row="0"  HeightRequest="100"></Image>
+                        <Label Text="{Binding MainCondition}"
                                x:Name="main"
                        FontSize="20" 
                    TextColor="Black"
@@ -65,14 +69,14 @@
                        Grid.Row="1"
                        HorizontalTextAlignment="Center"
                    />
-                        <Label Text="hosszú"
+                        <Label Text="{Binding Description}"
                                x:Name="description"
                        FontSize="17" 
                    TextColor="Black"
                    Grid.Column="1"
                        Grid.Row="2"
                        HorizontalTextAlignment="Center"/>
-                        <Label Text="3°"
+                        <Label Text="{Binding TempValue}"
                        FontSize="90" 
                    TextColor="Black"
                    HorizontalOptions="StartAndExpand"
@@ -82,27 +86,144 @@
                                Grid.Row="0"
                                Grid.RowSpan="2"
                            />
-                        <Label Text="Celsius"
+                        <Label Text="{Binding UnitName}"
                        FontSize="20" 
                    TextColor="Black"
                                Grid.Column="0"
                                Grid.Row="2"
-                   />
+                               x:Name="UnitName"
+                   >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ChangeUnit" />
+                            </Label.GestureRecognizers>
+                        </Label>
                     </Grid>
                 </Frame>
                 <Frame HasShadow="True" 
                        CornerRadius="10" 
        BackgroundColor="White"
        Padding="20"
+                      
        HorizontalOptions="FillAndExpand"
                        xct:ShadowEffect.Color="Black"
                        >
                     <ScrollView Orientation="Horizontal">
-                        <FlexLayout Direction="Row" Wrap="NoWrap" JustifyContent="Start" x:Name="hourlyContainer">
-                           
+                        <FlexLayout BindableLayout.ItemsSource="{Binding HourlyItemList}" VerticalOptions="Center" Wrap="NoWrap" >
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Label Text="{Binding hour}" FontAttributes="Bold"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        <Image Source="{Binding imgSource}" HeightRequest="80" HorizontalOptions="End" VerticalOptions="Center"  />
+                                        <Label Text="{Binding main}" FontAttributes="Bold"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        <Label Text="{Binding temp}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
                         </FlexLayout>
                     </ScrollView>
                 </Frame>
+                <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+                      
+       HorizontalOptions="FillAndExpand"
+                       xct:ShadowEffect.Color="Black"
+                       >
+                    <ListView Margin="0,20,0,0" ItemsSource="{Binding DailyItemList}" HeightRequest="370" x:Name="myList" VerticalOptions="Center" SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding day}" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="left" VerticalTextAlignment="Center" />
+                                        <Label Text="{Binding temp}" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  />
+                                        <Image Source="{Binding imgSource}" HeightRequest="80" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center"  />
+                                        </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+                      
+       HorizontalOptions="FillAndExpand"
+                       xct:ShadowEffect.Color="Black"
+                           Grid.Column="0"
+                           Grid.Row="0"
+                       >
+                        <StackLayout>
+                            <Label Text="Feels Like" HorizontalTextAlignment="Center" />
+                            <Image Source="feels_like.png" />
+                            <Label Text="{Binding FeelsLike}" HorizontalTextAlignment="Center" />
+                        </StackLayout>
+                    </Frame>
+                    <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+                      
+       HorizontalOptions="FillAndExpand"
+                       xct:ShadowEffect.Color="Black"
+                           Grid.Column="1"
+                           Grid.Row="0"
+                       >
+                        <StackLayout>
+                            <Label Text="Páratartalom" HorizontalTextAlignment="Center" />
+                            <Image Source="humidity.png" />
+                            <Label Text="{Binding Humidity}" HorizontalTextAlignment="Center" />
+                        </StackLayout>
+                    </Frame>
+                    <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+                      
+       HorizontalOptions="FillAndExpand"
+                       xct:ShadowEffect.Color="Black"
+                           Grid.Column="0"
+                           Grid.Row="1"
+                       >
+                        <StackLayout>
+                            <Label Text="Láthatóság" HorizontalTextAlignment="Center" />
+                            <Image Source="visibility.png" />
+                            <Label Text="{Binding Visibility}" HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                    </Frame>
+                    <Frame HasShadow="True" 
+                       CornerRadius="10" 
+       BackgroundColor="White"
+       Padding="20"
+                      
+       HorizontalOptions="FillAndExpand"
+                       xct:ShadowEffect.Color="Black"
+                           Grid.Column="1"
+                           Grid.Row="1"
+                       >
+                        <StackLayout>
+                            <Label Text="Szél" HorizontalTextAlignment="Center" />
+                            <Image Source="wind.png" />
+                            <Label Text="{Binding WindSpeed}" HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                    </Frame>
+                </Grid>
             </StackLayout>
         </ScrollView>
         </RefreshView>

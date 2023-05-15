@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.forecast_app">
     <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
-    <application android:label="Forecast_App.Android" android:theme="@style/MainTheme"></application>
+    <application android:exported="false" android:label="Forecast_App.Android" android:theme="@style/MainTheme">
+	<receiver android:enabled="true" android:exported="false" android:name="crc64df999be563077fc4.BootReceiver">
+		<intent-filter>
+			<action android:name="android.intent.action.BOOT_COMPLETED" />
+			<category android:name="android.intent.category.HOME" />
+		</intent-filter>
+	</receiver>
+	</application>
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />

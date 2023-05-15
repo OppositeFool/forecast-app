@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forecast App.Android", "For
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forecast App.iOS", "Forecast App\Forecast App.iOS\Forecast App.iOS.csproj", "{F4DD5AE9-E778-4FF6-980A-667575DFC5AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forecast App", "Forecast App\Forecast App\Forecast App.csproj", "{0EABB3F5-8FD1-423E-A1DF-51BFE4153347}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forecast App", "Forecast App\Forecast App\Forecast App.csproj", "{0EABB3F5-8FD1-423E-A1DF-51BFE4153347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Test", "Unit Test\Unit Test.csproj", "{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,18 @@ Global
 		{0EABB3F5-8FD1-423E-A1DF-51BFE4153347}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{0EABB3F5-8FD1-423E-A1DF-51BFE4153347}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{0EABB3F5-8FD1-423E-A1DF-51BFE4153347}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Release|iPhone.Build.0 = Release|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E7E83C23-7C27-4C11-8AB0-A4B3738AB9A7}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

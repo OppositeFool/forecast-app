@@ -1,9 +1,10 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Plugin.LocalNotification;
+ 
 
 namespace Forecast_App.Droid
 {
@@ -13,6 +14,8 @@ namespace Forecast_App.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            LocalNotificationCenter.CreateNotificationChannel();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
